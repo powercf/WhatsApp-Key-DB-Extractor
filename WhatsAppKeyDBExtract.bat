@@ -112,7 +112,7 @@ echo.
 if %sdkver% geq 23 (
 bin\adb.exe backup -f tmp\whatsapp.ab com.whatsapp
 ) else (
-bin\adb.exe backup -f tmp\whatsapp.ab -noapk com.whatsapp
+bin\adb.exe shell 'bu 1 backup com.whatsapp' | bin\sed.exe 's!\r$!!' > tmp/whatsapp.ab
 )
 if exist tmp\whatsapp.ab (
 echo.

@@ -14,6 +14,8 @@ is_tar=1
 [[ -z $(which tar) ]] && { is_tar=0; }
 is_tr=1
 [[ -z $(which tr) ]] && { is_tr=0; }
+is_sed=1
+[[ -z $(which sed) ]] && { is_sed=0; }
 
 echo -e "
 =========================================================================
@@ -40,6 +42,8 @@ elif (($is_tar == 0)); then
 echo -e "\e[0;33m Error: tar is not installed - please install tar and run again!\e[0m"
 elif (($is_tr == 0)); then
 echo -e "\e[0;33m Error: tr is not installed - please install tr and run again!\e[0m"
+elif (($is_sed == 0)); then
+echo -e "\e[0;33m Error: sed is not installed - please install sed and run again!\e[0m"
 else
 echo -e "\nPlease connect your Android device with USB Debugging enabled:\n"
 adb kill-server
@@ -94,7 +98,7 @@ echo -e "Install complete\n"
 if [ $sdkver -ge 23 ]; then
 adb backup -f tmp/whatsapp.ab com.whatsapp
 else
-adb backup -f tmp/whatsapp.ab -noapk com.whatsapp
+adb shell 'bu 1 backup com.whatsapp' | sed 's!\r$!!' >tmp/whatsapp.ab
 fi
 if [ -f tmp/whatsapp.ab ]; then
 echo -e "\nPlease enter your backup password (leave blank for none) and press Enter: "
